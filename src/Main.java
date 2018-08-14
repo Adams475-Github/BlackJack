@@ -3,7 +3,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		
 		Hand hand = new Hand();
 		Hand dHand = new Hand();
 		Deck deck = new Deck();
@@ -23,9 +22,9 @@ public class Main {
 		
 		int value = hand.value();
 		boolean running = true;
-		
 	
 		while (running) {
+			
 			String input = sc.nextLine();
 			
 			if (input.equalsIgnoreCase("Yes")) {
@@ -45,8 +44,10 @@ public class Main {
 		}
 		
 		if (value > 21) {
+			
 			hand.printCards();
-			System.out.println("You busted.");
+			System.out.println("You bust.");
+			
 		} else {
 			
 			System.out.println("Your lock in with:");
@@ -75,8 +76,6 @@ public class Main {
 				
 			}
 			
-			
-			
 			if (hand.value() > dHand.value()){
 				
 				System.out.println("You Won!");
@@ -92,12 +91,9 @@ public class Main {
 			}
 			
 		}
-		
-		
-		 
-		
-		
+	
 		sc.close();
+		
 	}
 
 }
