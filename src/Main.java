@@ -1,5 +1,7 @@
 import java.util.Scanner;
 public class Main {
+	
+	static int money = 100;
 
 	public static void main(String[] args) {
 		
@@ -9,6 +11,19 @@ public class Main {
 		Deal deal = new Deal(hand, deck, dHand);
 		Scanner sc = new Scanner(System.in);
 		
+		if (money < 1) {
+			System.out.println("You're out of money there bucko, no more for you.");
+			System.exit(0);
+			
+		}
+		
+		System.out.println("You have $" + money);
+		System.out.println("How much do you want to bet?");
+		
+		int bet;
+		bet = sc.nextInt();
+		sc.nextLine();
+		
 		deal.dealStart();
 		
 		deal.hit(false);
@@ -16,22 +31,24 @@ public class Main {
 		dHand.printCards();
 		deal.hit(false);
 		
-		System.out.println("Your Current Hand is:");
+		System.out.println("\nYour Current Hand is:");
 		hand.printCards();
-		System.out.println("Would you like to hit? Yes or No");
+		System.out.println("\nWould you like to hit? Yes or No");
 		
 		int value = hand.value();
 		boolean running = true;
+		
 	
 		while (running) {
-			
 			String input = sc.nextLine();
 			
 			if (input.equalsIgnoreCase("Yes")) {
 				deal.hit(true);
 				value = hand.value();
+				
 			} else if (input.equalsIgnoreCase("No")) {
 				break;
+				
 			} else {
 				System.out.println("Unrecognized input, please try again.");
 			}
@@ -39,24 +56,23 @@ public class Main {
 			System.out.println("Your Current Hand is:");
 			hand.printCards();
 			//System.out.println(value);
-			System.out.println("Would you like to hit? Yes or No");
+			System.out.println("\nWould you like to hit? Yes or No");
 			running = (value <= 21);
 		}
 		
 		if (value > 21) {
-			
 			hand.printCards();
-			System.out.println("You bust.");
+			System.out.println("\nYou busted.");
+			money -= bet;
 			
 		} else {
 			
-			System.out.println("Your lock in with:");
+			System.out.println("\nYour lock in with:");
 			hand.printCards();
-			System.out.println("The Dealer ends with");
 			
 			if (dHand.value() < hand.value()) {
-				
 				boolean condition = true;
+				
 				while (condition) {
 					
 					deal.hit(false);
@@ -67,33 +83,46 @@ public class Main {
 				
 			}
 			
-			dHand.printCards();
-			
 			if (dHand.value() > 21) {
+				System.out.println("\nThe Dealer has busted with:");
+				dHand.printCards();
 				
-				System.out.println("You Won");
-				System.exit(0);
+			} else {
+				System.out.println("\nThe Dealer ends with:");
+				dHand.printCards();
 				
 			}
 			
-			if (hand.value() > dHand.value()){
+			if (dHand.value() > 21) {
+				System.out.println("\nYou Won");
+				money += bet;
 				
-				System.out.println("You Won!");
+			} else if (hand.value() > dHand.value()){
+				System.out.println("\nYou Won!");
+				money += bet;
 				
 			} else if (hand.value() < dHand.value()) {
-				
-				System.out.println("You Lost.");
+				System.out.println("\nYou Lost.");
+				money -= bet;
 				
 			} else {
-				
-				System.out.println("You Tied.");
+				System.out.println("\nYou Tied.");
 				
 			}
 			
 		}
-	
-		sc.close();
 		
+		
+		System.out.println("\nWould you like to play again?"); 
+		String input2 = sc.nextLine();
+		
+		if (input2.equalsIgnoreCase("yes")) {
+			Main.main(null);
+		} else {
+			System.exit(0);
+		}
+		
+		sc.close();
 	}
 
 }
