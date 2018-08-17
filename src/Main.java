@@ -114,12 +114,19 @@ public class Main {
 		
 		
 		System.out.println("\nWould you like to play again?"); 
-		String input2 = sc.nextLine();
+		boolean run2 = true;
 		
-		if (input2.equalsIgnoreCase("yes")) {
-			Main.main(null);
-		} else {
-			System.exit(0);
+		while (run2) {
+			String input2 = sc.nextLine();
+			
+			if (input2.equalsIgnoreCase("yes")) {
+				Main.main(null);
+			} else if (input2.equalsIgnoreCase("no")) {
+				System.exit(0);
+			} else {
+				System.out.println("Unknown input, please try again");
+				System.out.println("\nWould you like to play again?");
+			}
 		}
 		
 		sc.close();
